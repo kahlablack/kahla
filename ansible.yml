@@ -1,0 +1,39 @@
+---
+- name: Create a VM 
+  hosts: localhost
+
+  vars_files:
+    - /etc/ansible/group_vars/vmware.yml
+  tasks:
+  - name: Create a virtual machine 
+    vmware_guest:
+      hostname: "VMLABVCT001.labvmware.local"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: False
+      name: VM_create_by_ansible
+      guest_id: centos7_64Guest
+      datacenter: "DatacenterParis"
+      folder: /PROD/
+      esxi_hostname: "vmlabesxi001.labvmware.local"
+      datastore: "datastore_vmlabesx001"
+      hardware:  
+        memory_mb: 512	
+        num_cpus: 1	
+        scsi: paravirtual	
+      disk:
+      - size_gb: 1
+        type: thin
+        datastore: datastore_vmlabesx001
+      networks:			
+      - name: VM Network	
+#        ip: 			
+#        netmask: 255.255.255.0
+#        gateway: 10.1.1.2
+#        type: static
+#        dns_servers:
+#        - 10.1.1.2
+#        - 1.1.1.1
+      state: poweredon		
+      wait_for_ip_address: yes	
+    delegate_to: localhost	
