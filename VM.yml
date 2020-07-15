@@ -22,8 +22,7 @@
       folder: /PROD/
       name: testvmAnsible
       state: poweredon
-      #guest_id: centos64Guest 
-      guest_id: centos7Guest 
+      guest_id: centos64Guest  
       esxi_hostname: vmlabesxi001.labvmware.local
       disk:
       - size_gb: 1
