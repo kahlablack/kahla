@@ -1,0 +1,40 @@
+---
+- name: Create a VM 
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    datacenter: DatacenterParis
+    esxi_host: vmlabesxi001.labvmware.local
+    notes: 'Created by Ansible'
+    vcenter_hostname: 192.168.136.50
+    vcenter_user: administrator@vsphere.local
+    vcenter_pass: P@ssword123
+
+  tasks:
+  - name: Create a VM 
+    vmware_guest:
+      hostname: 192.168.136.50
+      username: administrator@vsphere.local
+      password: P@ssword123
+      validate_certs: no
+      datacenter: DatacenterParis
+      folder: /PROD/
+      name: Ansible_VM
+      state: poweredon
+      template: TEMPLATE_Debian10_2020
+      esxi_hostname: vmlabesxi001.labvmware.local
+      #disk:
+      #- size_gb: 1
+       # type: thin
+        #datastore: datastore_vmlabesx001
+      #hardware:
+        #memory_mb: 1024
+        #num_cpus: 1
+        #scsi: paravirtual
+      #networks:
+      #- name: 'VM Network'
+#        mac: aa:bb:dd:aa:00:14
+      wait_for_ip_address: yes
+    #delegate_to: localhost
+    register: deploy_vm
